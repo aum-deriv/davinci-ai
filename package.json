@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@deriv-com/quill-ui": "^1.24.4",
+    "@deriv/quill-icons": "^2.4.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@types/dompurify": "^3.2.0",
