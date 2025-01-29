@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useChatContext } from "../contexts/ChatContext";
+import { config } from "../config/env";
 
 interface UseUploadFileReturn {
     selectedImage: File | null;
@@ -7,6 +9,7 @@ interface UseUploadFileReturn {
     error: string | null;
     handleImageSelect: (event: React.ChangeEvent<HTMLInputElement>) => void;
     handleUpload: () => Promise<void>;
+    clearSelection: () => void;
 }
 
 export const useUploadFile = (): UseUploadFileReturn => {
@@ -14,43 +17,22 @@ export const useUploadFile = (): UseUploadFileReturn => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { setFilePath } = useChatContext();
 
-    const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        if (file) {
-            setSelectedImage(file);
-            setError(null);
-
-            const url = URL.createObjectURL(file);
-            setPreviewUrl(url);
-
-            return () => URL.revokeObjectURL(url);
-        }
-    };
-
-    const handleUpload = async () => {
-        if (!selectedImage) {
-            setError("Please select an image first");
-            return;
-        }
-
+    const handleUploadWithFormData = async (formData: FormData) => {
         setIsUploading(true);
         setError(null);
 
-        const formData = new FormData();
-        formData.append("file", selectedImage);
-
         try {
             const response = await fetch(
-                `http://127.0.0.1:3000/api/v1/files/upload/d95729dc-9dae-4446-b764-0fe7e2600c5a`,
+                `${config.langflowUrl}/api/v1/files/upload/${config.flowId}`,
                 {
                     method: "POST",
                     body: formData,
                     credentials: "include",
                     mode: "cors",
                     headers: {
-                        Authorization:
-                            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhNTMzMTUwYS1mM2FmLTQ1MDAtOTFmZS04NGEyYzAyMzI2MzIiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5NjA3NjcwfQ.vZuhYMpjPM7CoXdm3-rmi3YSgNYprMpzF0j2Jl7dSS0",
+                        Authorization: `Bearer ${config.authToken}`,
                         Accept: "application/json",
                     },
                 }
@@ -62,16 +44,7 @@ export const useUploadFile = (): UseUploadFileReturn => {
 
             const data = await response.json();
             console.log("Upload successful:", data);
-
-            setSelectedImage(null);
-            setPreviewUrl(null);
-
-            const fileInput = document.querySelector(
-                'input[type="file"]'
-            ) as HTMLInputElement;
-            if (fileInput) {
-                fileInput.value = "";
-            }
+            setFilePath(data.file_path);
         } catch (err) {
             setError(
                 err instanceof Error
@@ -83,6 +56,42 @@ export const useUploadFile = (): UseUploadFileReturn => {
         }
     };
 
+    const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setSelectedImage(file);
+            setError(null);
+
+            // Upload the file directly
+            const formData = new FormData();
+            formData.append("file", file);
+            handleUploadWithFormData(formData);
+        }
+    };
+
+    // Keep handleUpload for backward compatibility
+    const handleUpload = async () => {
+        if (!selectedImage) {
+            setError("Please select an image first");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", selectedImage);
+        await handleUploadWithFormData(formData);
+    };
+
+    const clearSelection = () => {
+        setSelectedImage(null);
+        setPreviewUrl(null);
+        const fileInput = document.querySelector(
+            'input[type="file"]'
+        ) as HTMLInputElement;
+        if (fileInput) {
+            fileInput.value = "";
+        }
+    };
+
     return {
         selectedImage,
         previewUrl,
@@ -90,5 +99,6 @@ export const useUploadFile = (): UseUploadFileReturn => {
         error,
         handleImageSelect,
         handleUpload,
+        clearSelection,
     };
 };

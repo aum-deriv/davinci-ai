@@ -1,48 +1,50 @@
 import { IconButton } from "@deriv-com/quill-ui";
 import { useUploadFile } from "../../hooks/useUploadFile";
-import { LabelPairedImageMdRegularIcon } from "@deriv/quill-icons";
+import { LabelPairedImageLgRegularIcon } from "@deriv/quill-icons";
+import { useRef } from "react";
+import styles from "./ImageUploader.module.css";
+import { useChatContext } from "../../contexts/ChatContext";
 
 export const ImageUploader = () => {
-    const {
-        selectedImage,
-        previewUrl,
-        isUploading,
-        error,
-        handleImageSelect,
-        handleUpload,
-    } = useUploadFile();
+    const { isUploading, error, handleImageSelect } = useUploadFile();
+    const { setPreviewUrl } = useChatContext();
+
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleButtonClick = () => {
+        fileInputRef.current?.click();
+    };
+
+    const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            const url = URL.createObjectURL(file);
+            setPreviewUrl(url);
+            handleImageSelect(event);
+        }
+    };
 
     return (
-        <div>
+        <div className={styles.container}>
             <IconButton
                 color="black"
-                disabled={!selectedImage || isUploading}
-                icon={<LabelPairedImageMdRegularIcon />}
-                onClick={handleUpload}
-                size="md"
+                disabled={isUploading}
+                icon={<LabelPairedImageLgRegularIcon />}
+                onClick={handleButtonClick}
+                size="lg"
                 type="button"
                 variant="primary"
-            ></IconButton>
+            />
             <input
+                ref={fileInputRef}
+                className={styles.fileInput}
                 type="file"
                 accept="image/*"
-                onChange={handleImageSelect}
+                onChange={handleFileSelect}
                 disabled={isUploading}
             />
 
-            {previewUrl && (
-                <img
-                    src={previewUrl}
-                    alt="Selected image preview"
-                    style={{
-                        maxWidth: "300px",
-                        display: "block",
-                        margin: "20px 0",
-                    }}
-                />
-            )}
-
-            {error && <div style={{ color: "red" }}>{error}</div>}
+            {error && <div className={styles.error}>{error}</div>}
         </div>
     );
 };

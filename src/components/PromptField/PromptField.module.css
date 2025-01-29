@@ -1,0 +1,12 @@
+.container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.inputGroup {
+    flex: 1;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}

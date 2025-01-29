@@ -23,6 +23,9 @@ app.use(cors({
     maxAge: 600 // Cache preflight request results for 10 minutes
 }));
 
+// Parse JSON bodies
+app.use(express.json());
+
 // Configure multer for handling file uploads
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -64,7 +67,7 @@ app.post('/api/v1/files/upload/:flowId', upload.single('file'), async (req, res)
 
         // Make request to Langflow API
         const response = await fetch(
-            `http://127.0.0.1:7860/api/v1/files/upload/d95729dc-9dae-4446-b764-0fe7e2600c5a`,
+            `http://127.0.0.1:7860/api/v1/files/upload/efa3610a-b880-45c3-a43c-9e118a77c60f`,
             {
                 method: "POST",
                 body: formData,
@@ -96,6 +99,35 @@ app.post('/api/v1/files/upload/:flowId', upload.single('file'), async (req, res)
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: `Error uploading file: ${error.message}` });
+    }
+});
+
+// Run flow endpoint
+app.post('/api/v1/run/:flowId', async (req, res) => {
+    try {
+
+        const response = await fetch(
+            `http://127.0.0.1:7860/api/v1/run/efa3610a-b880-45c3-a43c-9e118a77c60f?stream=false`,
+            {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhNTMzMTUwYS1mM2FmLTQ1MDAtOTFmZS04NGEyYzAyMzI2MzIiLCJ0eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzY5NjA3NjcwfQ.vZuhYMpjPM7CoXdm3-rmi3YSgNYprMpzF0j2Jl7dSS0',
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(req.body)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(`Error running flow: ${response.status}`);
+        }
+
+        const data = await response.json();
+        res.json(data);
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: `Error running flow: ${error.message}` });
     }
 });
 

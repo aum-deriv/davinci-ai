@@ -1,9 +1,16 @@
-import { ImageUploader } from "./components/ImageUploader/ImageUploader";
+import { ThemeProvider } from "@deriv-com/quill-ui";
+import { ChatPanel } from "./components/ChatPanel/ChatPanel";
+import { ChatProvider } from "./contexts/ChatContext";
+import styles from "./App.module.css";
 
 const App = () => {
     return (
-        <div>
-            <ImageUploader />
+        <div className={styles.app}>
+            <ThemeProvider theme="light">
+                <ChatProvider>
+                    <ChatPanel />
+                </ChatProvider>
+            </ThemeProvider>
         </div>
     );
 };

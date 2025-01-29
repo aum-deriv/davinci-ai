@@ -1,0 +1,35 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    width: 100%;
+    position: relative;
+}
+
+.previewContainer {
+    position: relative;
+    display: inline-block;
+}
+
+.previewImage {
+    max-width: 150px;
+    max-height: 150px;
+    object-fit: contain;
+    display: block;
+    margin: 10px 0;
+}
+
+.closeButton {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
