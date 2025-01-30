@@ -1,17 +1,19 @@
 import { ThemeProvider } from "@deriv-com/quill-ui";
 import { ChatPanel } from "./components/ChatPanel/ChatPanel";
+import { CodePanel } from "./components/CodePanel/CodePanel";
 import { ChatProvider } from "./contexts/ChatContext";
 import styles from "./App.module.css";
 
-const App = () => {
+export const App = () => {
     return (
-        <div className={styles.app}>
-            <ThemeProvider theme="light">
-                <ChatProvider>
+        <ThemeProvider theme="light">
+            <ChatProvider>
+                <div className={styles.container}>
                     <ChatPanel />
-                </ChatProvider>
-            </ThemeProvider>
-        </div>
+                    <CodePanel />
+                </div>
+            </ChatProvider>
+        </ThemeProvider>
     );
 };
 

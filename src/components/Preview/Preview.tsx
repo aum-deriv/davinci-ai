@@ -1,4 +1,4 @@
-import { LegacyCloseCircle1pxRedIcon } from "@deriv/quill-icons";
+import { LegacyCloseCircle2pxBlackIcon } from "@deriv/quill-icons";
 import { useChatContext } from "../../contexts/ChatContext";
 import styles from "./Preview.module.css";
 
@@ -24,7 +24,10 @@ export const Preview = () => {
                     onClick={handleClear}
                     type="button"
                 >
-                    <LegacyCloseCircle1pxRedIcon fill="#ffffff" iconSize="xs" />
+                    <LegacyCloseCircle2pxBlackIcon
+                        fill="#ffffff"
+                        iconSize="xs"
+                    />
                 </button>
             </div>
         </div>

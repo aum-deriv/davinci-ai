@@ -1,12 +1,16 @@
 .container {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 16px;
-    padding: 16px;
+    gap: 24px;
+    padding: 1rem;
+    z-index: -1;
     height: 100%;
-    overflow-y: auto;
 }
 
+.container {
+    z-index: 1;
+}
 /* Custom scrollbar styles */
 .container::-webkit-scrollbar {
     width: 8px;
@@ -24,3 +28,10 @@
 .container::-webkit-scrollbar-thumb:hover {
     background-color: rgba(0, 0, 0, 0.3);
 }
+
+.image {
+    width: 200px;
+    margin: auto;
+    filter: grayscale(1) invert(1) brightness(1) opacity(0.2);
+}
+

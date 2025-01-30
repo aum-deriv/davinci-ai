@@ -1,0 +1,44 @@
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.outputWrapper {
+    flex: 1;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 500px;
+}
+
+.frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Custom scrollbar styles */
+.outputWrapper::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.outputWrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.outputWrapper::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+}
+
+.outputWrapper::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.3);
+}

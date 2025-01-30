@@ -10,3 +10,18 @@
     gap: 0.5rem;
     align-items: center;
 }
+
+.loader {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    animation-name: loader-animation;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+}
+
+@keyframes loader-animation {
+    50% {
+        opacity: 0.5;
+    }
+}

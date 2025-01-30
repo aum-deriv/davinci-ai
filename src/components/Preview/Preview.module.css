@@ -1,30 +1,30 @@
 .container {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    min-height: 200px;
     width: 100%;
     position: relative;
 }
 
 .previewContainer {
+    width: fit-content;
     position: relative;
     display: inline-block;
+    background: red;
 }
 
 .previewImage {
-    max-width: 150px;
-    max-height: 150px;
+    position: relative;
+    max-width: 7.5rem;
+    max-height: 7.5rem;
     object-fit: contain;
     display: block;
-    margin: 10px 0;
 }
 
 .closeButton {
     position: absolute;
-    top: -8px;
-    right: -8px;
+    top: -5px;
+    right: -5px;
     cursor: pointer;
     background: transparent;
     border: none;
