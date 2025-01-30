@@ -6,6 +6,7 @@
     padding: 1rem;
     z-index: -1;
     overflow-y: auto;
+    background: #fcfcfc;
 }
 
 .container {
@@ -30,8 +31,8 @@
 }
 
 .image {
-    width: 200px;
+    width: 400px;
     margin: auto;
-    filter: grayscale(1) invert(1) brightness(1) opacity(0.2);
+    filter: grayscale(1) invert(1) brightness(1) opacity(1);
 }
 

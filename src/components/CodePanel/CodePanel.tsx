@@ -9,7 +9,7 @@ export const CodePanel = () => {
     if (!htmlCode && !cssCode) {
         return (
             <div className={styles.container}>
-                <img src="/davinci-logo.png" className={styles.image}></img>
+                <img src="/davinci-logo.webp" className={styles.image}></img>
             </div>
         );
     }
