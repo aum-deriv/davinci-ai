@@ -16,8 +16,8 @@ export const CodePanel = () => {
 
     return (
         <div className={styles.container}>
-            <CodePreview />
             <CodeOutput />
+            <CodePreview />
         </div>
     );
 };

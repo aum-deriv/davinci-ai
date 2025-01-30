@@ -23,8 +23,7 @@ interface PromptFieldProps {
 export const PromptField = ({ onMessageSent }: PromptFieldProps) => {
     const [inputValue, setInputValue] = useState("");
     const { sendPrompt, isLoading } = useSendPrompt();
-    const { setHtmlCode, setCssCode, previewUrl, setPreviewUrl } =
-        useChatContext();
+    const { setHtmlCode, setCssCode, setPreviewUrl } = useChatContext();
 
     const handleSubmit = async () => {
         if (!inputValue.trim() || isLoading) return;
@@ -93,7 +92,7 @@ export const PromptField = ({ onMessageSent }: PromptFieldProps) => {
                             size="lg"
                             variant="primary"
                             onClick={handleSubmit}
-                            disabled={isLoading || !previewUrl}
+                            disabled={isLoading}
                         />
                     </div>
                 )}
