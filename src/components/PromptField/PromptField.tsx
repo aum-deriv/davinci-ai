@@ -23,10 +23,11 @@ interface PromptFieldProps {
 export const PromptField = ({ onMessageSent }: PromptFieldProps) => {
     const [inputValue, setInputValue] = useState("");
     const { sendPrompt, isLoading } = useSendPrompt();
-    const { setHtmlCode, setCssCode, setPreviewUrl } = useChatContext();
+    const { setHtmlCode, setCssCode, setPreviewUrl, setFilePath } =
+        useChatContext();
 
     const handleSubmit = async () => {
-        if (!inputValue.trim() || isLoading) return;
+        // if (!inputValue.trim() || isLoading) return;
 
         const userMessage = inputValue.trim();
         setInputValue("");
@@ -44,9 +45,10 @@ export const PromptField = ({ onMessageSent }: PromptFieldProps) => {
             const { htmlCode, cssCode, plainText } =
                 extractCodeFromMessage(messageText);
 
-            // Store code in context
-            setHtmlCode(htmlCode);
-            setCssCode(cssCode);
+            // Only update code in context if new code is present
+            if (htmlCode !== null) setHtmlCode(htmlCode);
+            if (cssCode !== null) setCssCode(cssCode);
+            setFilePath("");
 
             // Send only the plain text as the message
             onMessageSent(userMessage, plainText, timestamp);

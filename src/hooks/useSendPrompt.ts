@@ -15,10 +15,10 @@ export const useSendPrompt = (): UseSendPromptReturn => {
     const { filePath } = useChatContext();
 
     const sendPrompt = async (prompt: string) => {
-        if (!filePath) {
-            setError("No file uploaded");
-            return;
-        }
+        // if (!filePath) {
+        //     setError("No file uploaded");
+        //     return;
+        // }
 
         setIsLoading(true);
         setError(null);
@@ -36,8 +36,8 @@ export const useSendPrompt = (): UseSendPromptReturn => {
                         output_type: "chat",
                         input_type: "chat",
                         tweaks: {
-                            "ChatInput-xRW5X": {
-                                files: filePath,
+                            "ChatInput-iR5wv": {
+                                ...(filePath ? { files: filePath } : {}),
                                 input_value: prompt,
                             },
                         },
