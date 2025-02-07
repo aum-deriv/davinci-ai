@@ -12,7 +12,7 @@ interface UseSendPromptReturn {
 export const useSendPrompt = (): UseSendPromptReturn => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
-    const { filePath } = useChatContext();
+    const { filePath, session_id } = useChatContext();
 
     const sendPrompt = async (prompt: string) => {
         // if (!filePath) {
@@ -36,11 +36,12 @@ export const useSendPrompt = (): UseSendPromptReturn => {
                         output_type: "chat",
                         input_type: "chat",
                         tweaks: {
-                            "ChatInput-iR5wv": {
+                            [session_id]: {
                                 ...(filePath ? { files: filePath } : {}),
                                 input_value: prompt,
                             },
                         },
+                        session_id: session_id,
                     }),
                 }
             );

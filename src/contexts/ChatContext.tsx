@@ -9,6 +9,7 @@ interface ChatContextType {
     setHtmlCode: (code: string | null) => void;
     cssCode: string | null;
     setCssCode: (code: string | null) => void;
+    session_id: string;
 }
 
 const ChatContext = createContext<ChatContextType | undefined>(undefined);
@@ -18,6 +19,8 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
     const [htmlCode, setHtmlCode] = useState<string | null>(null);
     const [cssCode, setCssCode] = useState<string | null>(null);
+
+    const session_id = crypto.randomUUID();
 
     return (
         <ChatContext.Provider
@@ -30,6 +33,7 @@ export const ChatProvider = ({ children }: { children: ReactNode }) => {
                 setHtmlCode,
                 cssCode,
                 setCssCode,
+                session_id,
             }}
         >
             {children}
