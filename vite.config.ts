@@ -7,7 +7,12 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
 
     // Validate required environment variables
-    const requiredEnvVars = ["LANGFLOW_URL", "AUTH_TOKEN", "FLOW_ID"];
+    const requiredEnvVars = [
+        "LANGFLOW_URL",
+        "AUTH_TOKEN",
+        "FLOW_ID",
+        "CHAT_INPUT_COMPONENT_ID",
+    ];
     for (const envVar of requiredEnvVars) {
         if (!env[envVar]) {
             throw new Error(`${envVar} environment variable is required`);
@@ -20,6 +25,9 @@ export default defineConfig(({ mode }) => {
             "import.meta.env.LANGFLOW_URL": JSON.stringify(env.LANGFLOW_URL),
             "import.meta.env.AUTH_TOKEN": JSON.stringify(env.AUTH_TOKEN),
             "import.meta.env.FLOW_ID": JSON.stringify(env.FLOW_ID),
+            "import.meta.env.CHAT_INPUT_COMPONENT_ID": JSON.stringify(
+                env.CHAT_INPUT_COMPONENT_ID
+            ),
         },
     };
 });
