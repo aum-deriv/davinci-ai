@@ -67,7 +67,7 @@ app.post('/api/v1/files/upload/:flowId', upload.single('file'), async (req, res)
 
         // Make request to Langflow API
         const response = await fetch(
-            `http://127.0.0.1:7860/api/v1/files/upload/77881f23-161e-4fcb-ba19-52b744899d22`,
+            `http://127.0.0.1:7860/api/v1/files/upload/${flowId}`,
             {
                 method: "POST",
                 body: formData,
@@ -109,8 +109,10 @@ app.post('/api/v1/run/:flowId', async (req, res) => {
 
     try {
 
+        const { flowId } = req.params;
+
         const response = await fetch(
-            `http://127.0.0.1:7860/api/v1/run/77881f23-161e-4fcb-ba19-52b744899d22?stream=false`,
+            `http://127.0.0.1:7860/api/v1/run/${flowId}?stream=false`,
             {
                 method: 'POST',
                 headers: {
